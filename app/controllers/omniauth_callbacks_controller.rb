@@ -1,5 +1,17 @@
 class OmniauthCallbacksController < ApplicationController
   def twitter
-    render plain: "Success!"
+    twitter_account = Current.user.twitter_accounts.where(user_name: auth.info.nickname).first_or_initialize
+    twitter_account.update(
+      name: auth.info.name,
+      image: auth.info.image,
+      token: auth.credentials.token,
+      secret: auth.credentials.secret,
+    )
+
+    redirect_to root_path, notice: "You've successfully connected your Twitter account"
+  end
+
+  def auth
+    request.env["omniauth.auth"]
   end
 end
