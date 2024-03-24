@@ -12,7 +12,7 @@
 #  index_twitter_accounts_on_user_id: [user_id]
 #
 class TwitterAccount < ApplicationRecord
-  has_many :tweets
+  has_many :tweets, dependent: :destroy
   belongs_to :user
 
   validates :user_name, uniqueness: true
