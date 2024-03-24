@@ -17,12 +17,23 @@ class TwitterAccount < ApplicationRecord
 
   validates :user_name, uniqueness: true
 
+  ## TODO: try to implement the following method usim a gem Twitter
+  # def client
+  #   Twitter::REST::Client.new do |config|
+  #     config.consumer_key = Rails.application.credentials.dig(:twitter, :api_key)
+  #     config.consumer_secret = Rails.application.credentials.dig(:twitter, :api_secret)
+  #     config.access_token = token
+  #     config.access_token_secret = secret
+  #   end
+  # end
+
   def client
-    Twitter::REST::Client.new do |config|
-      config.consumer_key = ENV["TWITTER_API_KEY"]
-      config.consumer_secret = ENV["TWITTER_API_SECRET"]
-      config.access_token = self.access_token
-      config.access_token_secret = self.access_token_secret
-    end
+    x_credentials = {
+      api_key: Rails.application.credentials.dig(:twitter, :api_key),
+      api_key_secret: Rails.application.credentials.dig(:twitter, :api_secret),
+      access_token: token,
+      access_token_secret: secret,
+    }
+    X::Client.new(**x_credentials)
   end
 end

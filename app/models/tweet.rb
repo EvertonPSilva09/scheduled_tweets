@@ -25,4 +25,15 @@ class Tweet < ApplicationRecord
   def published?
     tweet_id?
   end
+
+  #TODO implement the following method usim a gem Twitter
+  # def publish_to_twitter!
+  #   tweet = twitter_account.client.update(body)
+  #   update(tweet_id: tweet.id)
+  # end
+
+  def publish_to_twitter!
+    tweet = twitter_account.client.post("tweets", "{\"text\":\"#{body}\"}")
+    update(tweet_id: tweet["data"]["id"])
+  end
 end
