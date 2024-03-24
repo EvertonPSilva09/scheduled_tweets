@@ -9,3 +9,4 @@ class TweetJob < ApplicationJob
     tweet.publish_to_twitter!
   end
 end
+
