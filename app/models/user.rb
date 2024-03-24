@@ -1,8 +1,13 @@
-# email:string
-# password_digest:string
+# table_name = users
+# columns:
+#  email: string
+#  password:string virtual
+#  password_confirmation:string virtual
+#  created_at: datetime, not null
+#  updated_at: datetime, not null
+# indexes:
+#  index_users_on_email: [email], unique
 #
-# password:string virtual
-# password_confirmation:string virtual
 class User < ApplicationRecord
   has_many :twitter_accounts
   has_many :tweets
